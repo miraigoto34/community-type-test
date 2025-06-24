@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地域活動タイプ診断テスト</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .option {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+        }
+        
+        .option input[type="radio"] {
+            display: none;
+        }
+        
+        .option label {
+            display: block;
+            padding: 12px 10px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            border: 2px solid transparent;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .option input[type="radio"]:checked + label {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+        }
+        
+        .option label:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .calculate-btn {
+            display: block;
+            width: 200px;
+            margin: 40px auto;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .result {
+            display: none;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .result-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .result-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .result-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .result-percentages {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .result-percentage {
+            font-size: 16px;
+            font-weight: bold;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                flex-direction: column;
+            }
+            
+            .option {
+                min-width: auto;
+            }
+            
+            .option label {
+                font-size: 14px;
+                padding: 15px;
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">地域活動タイプ診断テスト</h1>
+        <p class="subtitle">
+            15の質問に答えて、あなたの地域活動における特性を診断します。<br>
+            それぞれの質問について、最も当てはまるものを選んでください。
+        </p>
+        
+        <div class="question">
+            <div class="question-text">1. 新しい地域イベントの話を聞いた時の反応は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q1" value="encourage" id="q1a">
+                    <label for="q1a">すぐに応援したくなる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="connect" id="q1b">
+                    <label for="q1b">誰かに紹介したくなる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="observe" id="q1c">
+                    <label for="q1c">まずは様子を見たい</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="study" id="q1d">
+                    <label for="q1d">詳しく調べたくなる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q1" value="uninterested" id="q1e">
+                    <label for="q1e">特に興味はない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">2. グループで何かを決める時、あなたの役割は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q2" value="stable" id="q2a">
+                    <label for="q2a">方針をぶらさない</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="connect" id="q2b">
+                    <label for="q2b">意見をまとめる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="foundation" id="q2c">
+                    <label for="q2c">実務を支える</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="encourage" id="q2d">
+                    <label for="q2d">みんなを励ます</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q2" value="criticize" id="q2e">
+                    <label for="q2e">問題点を指摘する</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">3. 若者が新しいことに挑戦している時、どう関わりますか？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q3" value="watch" id="q3a">
+                    <label for="q3a">静かに見守る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="connect" id="q3b">
+                    <label for="q3b">適切な人を紹介する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="encourage" id="q3c">
+                    <label for="q3c">積極的に応援する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="advise" id="q3d">
+                    <label for="q3d">アドバイスする</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q3" value="uninterested" id="q3e">
+                    <label for="q3e">関わらない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">4. 地域活動で最も大切だと思うことは？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q4" value="stable" id="q4a">
+                    <label for="q4a">理念の一貫性</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="connect" id="q4b">
+                    <label for="q4b">人のつながり</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="foundation" id="q4c">
+                    <label for="q4c">基盤づくり</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="study" id="q4d">
+                    <label for="q4d">学習と改善</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q4" value="encourage" id="q4e">
+                    <label for="q4e">みんなの成長</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">5. 困っている人がいる時、どう行動しますか？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q5" value="foundation" id="q5a">
+                    <label for="q5a">具体的に手伝う</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="connect" id="q5b">
+                    <label for="q5b">誰かに相談する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="encourage" id="q5c">
+                    <label for="q5c">励ましの言葉をかける</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="watch" id="q5d">
+                    <label for="q5d">そっと見守る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q5" value="observe" id="q5e">
+                    <label for="q5e">様子を見る</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">6. 失敗やリスクについてどう考えますか？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q6" value="stable" id="q6a">
+                    <label for="q6a">学びの機会</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="observe" id="q6b">
+                    <label for="q6b">慎重に避けたい</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="study" id="q6c">
+                    <label for="q6c">事前に研究する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="criticize" id="q6d">
+                    <label for="q6d">しっかり指摘する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q6" value="uninterested" id="q6e">
+                    <label for="q6e">自分には関係ない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">7. 情報を得た時、まず何をしますか？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q7" value="spread" id="q7a">
+                    <label for="q7a">人に伝える</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="study" id="q7b">
+                    <label for="q7b">詳しく調べる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="stable" id="q7c">
+                    <label for="q7c">自分の考えと照合</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="observe" id="q7d">
+                    <label for="q7d">しばらく保留</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q7" value="uninterested" id="q7e">
+                    <label for="q7e">特に何もしない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">8. 会議や打ち合わせでの自分の様子は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q8" value="stable" id="q8a">
+                    <label for="q8a">一貫した意見を述べる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="connect" id="q8b">
+                    <label for="q8b">みんなの意見をつなぐ</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="foundation" id="q8c">
+                    <label for="q8c">実務的な準備をする</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="advise" id="q8d">
+                    <label for="q8d">経験談を話す</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q8" value="observe" id="q8e">
+                    <label for="q8e">ほとんど発言しない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">9. 他の地域の成功事例を聞いた時の反応は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q9" value="study" id="q9a">
+                    <label for="q9a">詳しく学びたい</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="advise" id="q9b">
+                    <label for="q9b">うちならこうする</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="stable" id="q9c">
+                    <label for="q9c">自分たちの方針と照合</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="spread" id="q9d">
+                    <label for="q9d">誰かに紹介したい</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q9" value="criticize" id="q9e">
+                    <label for="q9e">うまくいかない理由を考える</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">10. 新しいメンバーが加わった時の対応は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q10" value="encourage" id="q10a">
+                    <label for="q10a">温かく迎える</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="connect" id="q10b">
+                    <label for="q10b">他の人に紹介する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="foundation" id="q10c">
+                    <label for="q10c">環境を整える</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="watch" id="q10d">
+                    <label for="q10d">しばらく様子を見る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q10" value="observe" id="q10e">
+                    <label for="q10e">距離を保つ</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">11. 活動の成果について聞かれた時は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q11" value="stable" id="q11a">
+                    <label for="q11a">理念の大切さを語る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="foundation" id="q11b">
+                    <label for="q11b">具体的な数字を示す</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="encourage" id="q11c">
+                    <label for="q11c">参加者の成長を語る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="study" id="q11d">
+                    <label for="q11d">課題も含めて分析</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q11" value="advise" id="q11e">
+                    <label for="q11e">改善提案をする</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">12. 資金調達や予算の話になった時は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q12" value="foundation" id="q12a">
+                    <label for="q12a">積極的に関わる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="connect" id="q12b">
+                    <label for="q12b">協力者を探す</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="study" id="q12c">
+                    <label for="q12c">他の方法を調べる</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="observe" id="q12d">
+                    <label for="q12d">様子を見る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q12" value="uninterested" id="q12e">
+                    <label for="q12e">関わりたくない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">13. 活動が思うようにいかない時は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q13" value="stable" id="q13a">
+                    <label for="q13a">初心を思い出す</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="connect" id="q13b">
+                    <label for="q13b">誰かに相談する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="foundation" id="q13c">
+                    <label for="q13c">基本に戻って立て直す</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="study" id="q13d">
+                    <label for="q13d">原因を分析する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q13" value="criticize" id="q13e">
+                    <label for="q13e">問題点を指摘する</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">14. SNSでの情報発信について</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q14" value="encourage" id="q14a">
+                    <label for="q14a">応援メッセージを送る</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="spread" id="q14b">
+                    <label for="q14b">積極的にシェアする</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="watch" id="q14c">
+                    <label for="q14c">いいねで応援</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="observe" id="q14d">
+                    <label for="q14d">見るだけ</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q14" value="uninterested" id="q14e">
+                    <label for="q14e">あまり見ない</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <div class="question-text">15. 地域活動における自分の理想の関わり方は？</div>
+            <div class="options">
+                <div class="option">
+                    <input type="radio" name="q15" value="stable" id="q15a">
+                    <label for="q15a">理念を守り続ける</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="connect" id="q15b">
+                    <label for="q15b">人と人をつなぐ</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="foundation" id="q15c">
+                    <label for="q15c">基盤を支える</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="encourage" id="q15d">
+                    <label for="q15d">みんなを応援する</label>
+                </div>
+                <div class="option">
+                    <input type="radio" name="q15" value="study" id="q15e">
+                    <label for="q15e">学び続ける</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="calculate-btn" onclick="calculateResult()">診断結果を見る</button>
+
+        <div id="result" class="result">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-description" id="resultDescription"></div>
+            <div class="result-percentages" id="resultPercentages"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateResult() {
+            const types = {
+                stable: { 
+                    icon: "⚓", 
+                    name: "変わらない人（ブレない軸派）", 
+                    desc: "一貫した理念を持ち続ける人。流行や批判に左右されず信念を貫き通します。その一貫性が多くの人の安心感や信頼につながっています。" 
+                },
+                connect: { 
+                    icon: "🔗", 
+                    name: "繋ぐ人（橋渡し名人）", 
+                    desc: "異なる世代や価値観の人たちを自然に繋げる人。翻訳能力に長けていて、若者の言葉を大人に、企業の想いを学生に伝えることができます。" 
+                },
+                foundation: { 
+                    icon: "🏛️", 
+                    name: "支える人（縁の下サポーター）", 
+                    desc: "環境づくりや基盤整備を黙々と続ける人。地味だけど絶対に必要な作業を引き受けてくれます。感謝されることを求めません。" 
+                },
+                encourage: { 
+                    icon: "📣", 
+                    name: "応援してくれる人（エール団長）", 
+                    desc: "温かい言葉やSNSでのシェアで活動を支えてくれる人。その存在だけで、活動する人たちの心の支えになっています。" 
+                },
+                watch: { 
+                    icon: "👁️", 
+                    name: "見守ってくれる人（優しい観察者）", 
+                    desc: "静かに見守り、必要な時にそっと手を差し伸べてくれる人。長期的な視点で成長を見守ってくれます。" 
+                },
+                observe: { 
+                    icon: "🔍", 
+                    name: "様子見の人（慎重な観察者）", 
+                    desc: "成果が見えてから参加を検討する慎重な人。決して悪意はなく、むしろ責任感が強いからこその慎重さです。" 
+                },
+                study: { 
+                    icon: "📚", 
+                    name: "学習意欲のある人（勉強熱心派）", 
+                    desc: "新しいアプローチに興味を持ち、積極的に情報収集する人。セミナーや勉強会によく参加し、自分の現場でも活用しようと考えています。" 
+                },
+                spread: { 
+                    icon: "📢", 
+                    name: "橋渡し役（情報通派）", 
+                    desc: "直接参加はしないけれど、口コミで活動を広げてくれる人。ネットワークが広く、情報拡散力があります。" 
+                },
+                uninterested: { 
+                    icon: "💤", 
+                    name: "無関心な人（マイペース派）", 
+                    desc: "地域活動に対して「自分には関係ない」と感じている人。忙しい日常に追われていて、関心を向ける余裕がない状態。" 
+                },
+                advise: { 
+                    icon: "💭", 
+                    name: "理想を語る人（評論家派）", 
+                    desc: "理屈は完璧だけれど実際の行動が伴わない人。会議では積極的に発言するけれど、具体的な作業になると姿が見えなくなります。" 
+                },
+                criticize: { 
+                    icon: "❌", 
+                    name: "批判する人（否定派）", 
+                    desc: "新しい取り組みに対して批判ばかりする人。リスクを指摘するのは大切ですが、建設的な提案はなく、挑戦する気持ちを削いでしまいます。" 
+                }
+            };
+
+            let scores = {};
+            Object.keys(types).forEach(key => scores[key] = 0);
+
+            // 15問すべての回答を取得
+            for (let i = 1; i <= 15; i++) {
+                const radios = document.getElementsByName('q' + i);
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        if (scores[radio.value] !== undefined) {
+                            scores[radio.value]++;
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // 最高スコアを見つける
+            let maxScore = 0;
+            let resultType = 'encourage';
+            
+            for (let type in scores) {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    resultType = type;
+                }
+            }
+
+            // 結果を表示
+            const selectedType = types[resultType];
+            
+            document.getElementById('resultIcon').textContent = selectedType.icon;
+            document.getElementById('resultTitle').textContent = 'あなたは「' + selectedType.name + '」タイプです！';
+            document.getElementById('resultDescription').textContent = selectedType.desc;
+            
+            // 上位3つのパーセンテージを表示
+            const sortedScores = Object.entries(scores)
+                .filter(([type, score]) => score > 0)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 3);
+            
+            let percentageHTML = '';
+            sortedScores.forEach(([type, score]) => {
+                const percentage = Math.round((score / 15) * 100);
+                const typeData = types[type];
+                if (typeData) {
+                    percentageHTML += '<div class="result-percentage">' + typeData.icon + ' ' + percentage + '%</div>';
+                }
+            });
+            
+            document.getElementById('resultPercentages').innerHTML = percentageHTML;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
