@@ -1,0 +1,1 @@
+# community-type-test
